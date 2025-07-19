@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>داور - ساخت بازی</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="centered">
+    <h2>🧑‍⚖️ ایجاد بازی جدید</h2>
+    <label>تعداد بازیکنان:
+      <select id="playerCount"></select>
+    </label>
+    <button onclick="createGame()">🎲 ساخت بازی</button>
+    <div id="linkArea" style="margin-top:1rem;"></div>
+  </div>
+  <script>
+    const select = document.getElementById("playerCount");
+    for (let i = 3; i <= 10; i++) {
+      const opt = document.createElement("option");
+      opt.value = i;
+      opt.textContent = i;
+      select.appendChild(opt);
+    }
+
+    function createGame() {
+      const count = select.value;
+      const code = Math.random().toString(36).substr(2, 6);
+      localStorage.setItem('game_' + code, JSON.stringify({ count }));
+      document.getElementById('linkArea').innerHTML =
+        '<p>بازیکنان این لینک را باز کنند:</p>' +
+        '<p><code>' + window.location.origin + '/player.html?game=' + code + '</code></p>';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>ورود بازیکن</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="centered">
+    <h2>🙋‍♂️ ورود به بازی</h2>
+    <input id="name" placeholder="نام بازیکن" />
+    <button onclick="joinGame()">ورود</button>
+  </div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const code = params.get("game");
+
+    function joinGame() {
+      const name = document.getElementById('name').value;
+      if (!name) return alert("نام را وارد کنید");
+      const gameData = JSON.parse(localStorage.getItem('game_' + code));
+      if (!gameData) return alert("کد معتبر نیست");
+      let players = JSON.parse(localStorage.getItem('players_' + code) || "[]");
+      if (players.find(p => p.name === name)) return alert("این نام قبلا استفاده شده");
+      if (players.length >= gameData.count) return alert("بازی پر شده");
+      players.push({ name });
+      localStorage.setItem('players_' + code, JSON.stringify(players));
+      localStorage.setItem('myName', name);
+      location.href = 'game.html?game=' + code;
+    }
+  </script>
+</body>
+</html>

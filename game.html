@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>بازی جاسوس</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="centered">
+    <h1>🎮 بازی جاسوس</h1>
+    <div id="gameContent">⏳ در حال بارگیری بازیکنان...</div>
+  </div>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const code = params.get("game");
+    const name = localStorage.getItem('myName');
+    const players = JSON.parse(localStorage.getItem('players_' + code));
+    const game = JSON.parse(localStorage.getItem('game_' + code));
+    if (!players || !game || !name) {
+      document.getElementById('gameContent').textContent = 'خطا در ورود به بازی';
+    } else {
+      document.getElementById('gameContent').innerHTML = '<p>خوش آمدی ' + name + '</p>' +
+        '<p>بازیکنان حاضر:</p>' +
+        players.map(p => '👤 ' + p.name).join('<br>') +
+        '<p>🕰️ منتظر شروع بازی از طرف داور باشید...</p>';
+    }
+  </script>
+</body>
+</html>
